@@ -18,6 +18,7 @@
                 </p>
                 <a href="{% url 'task_detail' task.pk %}" class="btn btn-sm btn-outline-primary">Подробнее</a>
                 <a href="{% url 'task_update' task.pk %}" class="btn btn-sm btn-outline-warning">Редактировать</a>
+                <a href="{% url 'task_delete' task.pk %}" class="btn btn-sm btn-outline-danger">Удалить</a>
             </div>
         </div>
     {% empty %}

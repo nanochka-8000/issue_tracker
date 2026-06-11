@@ -30,6 +30,7 @@
             <hr>
             <a href="{% url 'task_list' %}" class="btn btn-secondary">К списку</a>
             <a href="{% url 'task_update' task.pk %}" class="btn btn-warning">Редактировать</a>
+            <a href="{% url 'task_delete' task.pk %}" class="btn btn-danger">Удалить</a>
         </div>
     </div>
 {% endblock %}

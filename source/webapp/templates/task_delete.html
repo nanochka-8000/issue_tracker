@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Удалить задачу{% endblock %}
+
+{% block content %}
+    <h1 class="mb-3">Удалить задачу #{{ task.pk }}?</h1>
+
+    <div class="card shadow-sm mb-3" style="max-width: 600px;">
+        <div class="card-body">
+            <h5 class="card-title">{{ task.summary }}</h5>
+            <p class="card-text mb-2">
+                <span class="badge text-bg-secondary">{{ task.type.name }}</span>
+                <span class="badge text-bg-info">{{ task.status.name }}</span>
+            </p>
+            <p class="card-text text-muted small">
+                Создано: {{ task.created_at|date:"d.m.Y H:i" }}
+            </p>
+        </div>
+    </div>
+
+    <p class="text-danger">Это действие нельзя отменить.</p>
+
+    <form method="post" action="{% url 'task_delete' task.pk %}" class="d-inline">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Да, удалить</button>
+    </form>
+    <a href="{% url 'task_list' %}" class="btn btn-secondary">Отмена</a>
+{% endblock %}
