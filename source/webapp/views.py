@@ -41,3 +41,27 @@ class TaskCreateView(View):
             )
             return redirect('task_list')
         return render(request, 'task_create.html', {'form': form})
+
+
+class TaskUpdateView(View):
+    def get(self, request, pk):
+        task = get_object_or_404(Task, pk=pk)
+        form = TaskForm(initial={
+            'summary': task.summary,
+            'description': task.description,
+            'type': task.type,
+            'status': task.status,
+        })
+        return render(request, 'task_update.html', {'form': form, 'task': task})
+
+    def post(self, request, pk):
+        task = get_object_or_404(Task, pk=pk)
+        form = TaskForm(data=request.POST)
+        if form.is_valid():
+            task.summary = form.cleaned_data['summary']
+            task.description = form.cleaned_data['description']
+            task.type = form.cleaned_data['type']
+            task.status = form.cleaned_data['status']
+            task.save()
+            return redirect('task_detail', pk=task.pk)
+        return render(request, 'task_update.html', {'form': form, 'task': task})

@@ -17,6 +17,7 @@
                     Создано: {{ task.created_at|date:"d.m.Y H:i" }}
                 </p>
                 <a href="{% url 'task_detail' task.pk %}" class="btn btn-sm btn-outline-primary">Подробнее</a>
+                <a href="{% url 'task_update' task.pk %}" class="btn btn-sm btn-outline-warning">Редактировать</a>
             </div>
         </div>
     {% empty %}
