@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ task.summary }}{% endblock %}
+
+{% block content %}
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Задача #{{ task.pk }}: {{ task.summary }}</h4>
+        </div>
+        <div class="card-body">
+            <p>
+                <strong>Тип:</strong> <span class="badge text-bg-secondary">{{ task.type.name }}</span>
+                <strong class="ms-3">Статус:</strong> <span class="badge text-bg-info">{{ task.status.name }}</span>
+            </p>
+
+            <h6>Полное описание</h6>
+            <div class="mb-3">
+                {% if task.description %}
+                    {{ task.description|linebreaks }}
+                {% else %}
+                    <span class="text-muted">Описания нет.</span>
+                {% endif %}
+            </div>
+
+            <p class="text-muted small mb-0">
+                Создано: {{ task.created_at|date:"d.m.Y H:i" }} <br>
+                Обновлено: {{ task.updated_at|date:"d.m.Y H:i" }}
+            </p>
+
+            <hr>
+            <a href="{% url 'task_list' %}" class="btn btn-secondary">К списку</a>
+        </div>
+    </div>
+{% endblock %}
