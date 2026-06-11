@@ -1,0 +1,32 @@
+<form method="post" class="card card-body shadow-sm" style="max-width: 600px;">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <label class="form-label" for="{{ form.summary.id_for_label }}">Краткое описание</label>
+        {{ form.summary }}
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="{{ form.description.id_for_label }}">Полное описание</label>
+        {{ form.description }}
+    </div>
+
+    <div class="row">
+        <div class="col mb-3">
+            <label class="form-label" for="{{ form.type.id_for_label }}">Тип</label>
+            {{ form.type }}
+        </div>
+        <div class="col mb-3">
+            <label class="form-label" for="{{ form.status.id_for_label }}">Статус</label>
+            {{ form.status }}
+        </div>
+    </div>
+
+    {% if form.errors %}
+        <div class="alert alert-danger small">
+            Пожалуйста, исправь ошибки в форме.
+        </div>
+    {% endif %}
+
+    <button type="submit" class="btn btn-success">Сохранить</button>
+</form>

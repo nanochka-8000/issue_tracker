@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %}Добавить задачу{% endblock %}
+
+{% block content %}
+    <h1 class="mb-3">Добавить задачу</h1>
+    <a href="{% url 'task_list' %}" class="btn btn-link mb-3 px-0">← К списку</a>
+
+    {% include '_task_form.html' %}
+{% endblock %}
