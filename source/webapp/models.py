@@ -24,11 +24,10 @@ class Task(models.Model):
         related_name='tasks',
         verbose_name='Статус',
     )
-    type = models.ForeignKey(
+    types = models.ManyToManyField(
         Type,
-        on_delete=models.PROTECT,
         related_name='tasks',
-        verbose_name='Тип задачи',
+        verbose_name='Типы задачи',
     )
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Время обновления')

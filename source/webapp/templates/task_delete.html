@@ -9,7 +9,9 @@
         <div class="card-body">
             <h5 class="card-title">{{ task.summary }}</h5>
             <p class="card-text mb-2">
-                <span class="badge text-bg-secondary">{{ task.type.name }}</span>
+                {% for type in task.types.all %}
+                    <span class="badge text-bg-secondary">{{ type.name }}</span>
+                {% endfor %}
                 <span class="badge text-bg-info">{{ task.status.name }}</span>
             </p>
             <p class="card-text text-muted small">

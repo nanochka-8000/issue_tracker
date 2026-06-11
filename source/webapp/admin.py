@@ -11,9 +11,10 @@ class TypeAdmin(admin.ModelAdmin):
 
 
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ['id', 'summary', 'status', 'type', 'created_at']
-    list_filter = ['status', 'type']
+    list_display = ['id', 'summary', 'status', 'created_at']
+    list_filter = ['status', 'types']
     search_fields = ['summary', 'description']
+    filter_horizontal = ['types']
 
 
 admin.site.register(Status, StatusAdmin)

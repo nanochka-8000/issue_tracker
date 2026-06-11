@@ -33,12 +33,12 @@ class TaskCreateView(View):
     def post(self, request):
         form = TaskForm(data=request.POST)
         if form.is_valid():
-            Task.objects.create(
+            task = Task.objects.create(
                 summary=form.cleaned_data['summary'],
                 description=form.cleaned_data['description'],
                 status=form.cleaned_data['status'],
-                type=form.cleaned_data['type'],
             )
+            task.types.set(form.cleaned_data['types'])
             return redirect('task_list')
         return render(request, 'task_create.html', {'form': form})
 
@@ -49,7 +49,7 @@ class TaskUpdateView(View):
         form = TaskForm(initial={
             'summary': task.summary,
             'description': task.description,
-            'type': task.type,
+            'types': task.types.all(),
             'status': task.status,
         })
         return render(request, 'task_update.html', {'form': form, 'task': task})
@@ -60,9 +60,9 @@ class TaskUpdateView(View):
         if form.is_valid():
             task.summary = form.cleaned_data['summary']
             task.description = form.cleaned_data['description']
-            task.type = form.cleaned_data['type']
             task.status = form.cleaned_data['status']
             task.save()
+            task.types.set(form.cleaned_data['types'])
             return redirect('task_detail', pk=task.pk)
         return render(request, 'task_update.html', {'form': form, 'task': task})
 

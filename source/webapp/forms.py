@@ -14,10 +14,10 @@ class TaskForm(forms.Form):
         label='Полное описание',
         widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
     )
-    type = forms.ModelChoiceField(
+    types = forms.ModelMultipleChoiceField(
         queryset=Type.objects.all(),
-        label='Тип',
-        widget=forms.Select(attrs={'class': 'form-select'}),
+        label='Типы',
+        widget=forms.CheckboxSelectMultiple,
     )
     status = forms.ModelChoiceField(
         queryset=Status.objects.all(),

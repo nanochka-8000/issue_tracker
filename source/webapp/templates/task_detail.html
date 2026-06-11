@@ -9,7 +9,10 @@
         </div>
         <div class="card-body">
             <p>
-                <strong>Тип:</strong> <span class="badge text-bg-secondary">{{ task.type.name }}</span>
+                <strong>Типы:</strong>
+                {% for type in task.types.all %}
+                    <span class="badge text-bg-secondary">{{ type.name }}</span>
+                {% endfor %}
                 <strong class="ms-3">Статус:</strong> <span class="badge text-bg-info">{{ task.status.name }}</span>
             </p>
 
