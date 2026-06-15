@@ -4,29 +4,35 @@
     <div class="mb-3">
         <label class="form-label" for="{{ form.summary.id_for_label }}">Краткое описание</label>
         {{ form.summary }}
+        {% if form.summary.errors %}
+            <div class="text-danger small mt-1">{{ form.summary.errors|join:" " }}</div>
+        {% endif %}
     </div>
 
     <div class="mb-3">
         <label class="form-label" for="{{ form.description.id_for_label }}">Полное описание</label>
         {{ form.description }}
+        {% if form.description.errors %}
+            <div class="text-danger small mt-1">{{ form.description.errors|join:" " }}</div>
+        {% endif %}
     </div>
 
     <div class="row">
         <div class="col mb-3">
             <label class="form-label">Типы</label>
             {{ form.types }}
+            {% if form.types.errors %}
+                <div class="text-danger small mt-1">{{ form.types.errors|join:" " }}</div>
+            {% endif %}
         </div>
         <div class="col mb-3">
             <label class="form-label" for="{{ form.status.id_for_label }}">Статус</label>
             {{ form.status }}
+            {% if form.status.errors %}
+                <div class="text-danger small mt-1">{{ form.status.errors|join:" " }}</div>
+            {% endif %}
         </div>
     </div>
-
-    {% if form.errors %}
-        <div class="alert alert-danger small">
-            Пожалуйста, исправь ошибки в форме.
-        </div>
-    {% endif %}
 
     <button type="submit" class="btn btn-success">Сохранить</button>
 </form>

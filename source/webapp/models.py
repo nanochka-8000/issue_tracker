@@ -1,5 +1,7 @@
 from django.db import models
 
+from webapp.validators import validate_summary_capital, validate_no_placeholder
+
 
 class Status(models.Model):
     name = models.CharField(max_length=50, verbose_name='Название')
@@ -16,8 +18,17 @@ class Type(models.Model):
 
 
 class Task(models.Model):
-    summary = models.CharField(max_length=200, verbose_name='Краткое описание')
-    description = models.TextField(blank=True, default='', verbose_name='Полное описание')
+    summary = models.CharField(
+        max_length=200,
+        validators=[validate_summary_capital],
+        verbose_name='Краткое описание',
+    )
+    description = models.TextField(
+        blank=True,
+        default='',
+        validators=[validate_no_placeholder],
+        verbose_name='Полное описание',
+    )
     status = models.ForeignKey(
         Status,
         on_delete=models.PROTECT,
