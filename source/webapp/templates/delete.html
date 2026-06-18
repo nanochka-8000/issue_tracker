@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Удалить проект{% endblock %}
+
+{% block content %}
+    <h1 class="mb-3">Удалить проект «{{ project.name }}»?</h1>
+
+    <div class="card shadow-sm mb-3" style="max-width: 500px;">
+        <div class="card-body">
+            <p class="text-muted small mb-0">
+                {{ project.start_date|date:"d.m.Y" }}
+                {% if project.end_date %} — {{ project.end_date|date:"d.m.Y" }}{% endif %}
+            </p>
+            {% if project.tasks.exists %}
+                <p class="text-warning mt-2 mb-0">
+                    Внимание: вместе с проектом удалятся все его задачи ({{ project.tasks.count }} шт.).
+                </p>
+            {% endif %}
+        </div>
+    </div>
+
+    <p class="text-danger">Это действие нельзя отменить.</p>
+
+    <form method="post" class="d-inline">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Да, удалить</button>
+    </form>
+    <a href="{% url 'project_detail' project.pk %}" class="btn btn-secondary">Отмена</a>
+{% endblock %}

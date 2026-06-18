@@ -36,4 +36,5 @@
 
     <hr>
     <a href="{% url 'project_list' %}" class="btn btn-secondary">К списку проектов</a>
-{% endblock %}
+    <a href="{% url 'project_update' project.pk %}" class="btn btn-warning">Редактировать</a>
+    <a href="{% url 'project_delete' project.pk %}" class="btn btn-danger">Удалить</a>
