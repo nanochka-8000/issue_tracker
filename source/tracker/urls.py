@@ -18,18 +18,24 @@ from django.contrib import admin
 from django.urls import path
 
 from webapp.views import (
-    TaskListView,
     TaskDetailView,
     TaskCreateView,
     TaskUpdateView,
     TaskDeleteView,
+    ProjectListView,
+    ProjectDetailView,
 )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', TaskListView.as_view(), name='task_list'),
-    path('tasks/<int:pk>/', TaskDetailView.as_view(), name='task_detail'),
+
+    # Главная — список проектов
+    path('', ProjectListView.as_view(), name='project_list'),
+    path('projects/<int:pk>/', ProjectDetailView.as_view(), name='project_detail'),
+
+    # Задачи (старые маршруты, доберём в следующем этапе)
     path('tasks/add/', TaskCreateView.as_view(), name='task_create'),
+    path('tasks/<int:pk>/', TaskDetailView.as_view(), name='task_detail'),
     path('tasks/<int:pk>/update/', TaskUpdateView.as_view(), name='task_update'),
     path('tasks/<int:pk>/delete/', TaskDeleteView.as_view(), name='task_delete'),
 ]

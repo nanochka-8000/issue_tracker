@@ -7,7 +7,7 @@ from webapp.models import Task
 
 
 class TaskListView(TemplateView):
-    template_name = 'index.html'
+    template_name = 'tasks/index.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -16,7 +16,7 @@ class TaskListView(TemplateView):
 
 
 class TaskDetailView(TemplateView):
-    template_name = 'task_detail.html'
+    template_name = 'tasks/detail.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -28,21 +28,21 @@ class TaskDetailView(TemplateView):
 class TaskCreateView(View):
     def get(self, request):
         form = TaskForm()
-        return render(request, 'task_create.html', {'form': form})
+        return render(request, 'tasks/create.html', {'form': form})
 
     def post(self, request):
         form = TaskForm(data=request.POST)
         if form.is_valid():
             form.save()
-            return redirect('task_list')
-        return render(request, 'task_create.html', {'form': form})
+            return redirect('project_list')
+        return render(request, 'tasks/create.html', {'form': form})
 
 
 class TaskUpdateView(View):
     def get(self, request, pk):
         task = get_object_or_404(Task, pk=pk)
         form = TaskForm(instance=task)
-        return render(request, 'task_update.html', {'form': form, 'task': task})
+        return render(request, 'tasks/update.html', {'form': form, 'task': task})
 
     def post(self, request, pk):
         task = get_object_or_404(Task, pk=pk)
@@ -50,15 +50,15 @@ class TaskUpdateView(View):
         if form.is_valid():
             form.save()
             return redirect('task_detail', pk=task.pk)
-        return render(request, 'task_update.html', {'form': form, 'task': task})
+        return render(request, 'tasks/update.html', {'form': form, 'task': task})
 
 
 class TaskDeleteView(View):
     def get(self, request, pk):
         task = get_object_or_404(Task, pk=pk)
-        return render(request, 'task_delete.html', {'task': task})
+        return render(request, 'tasks/delete.html', {'task': task})
 
     def post(self, request, pk):
         task = get_object_or_404(Task, pk=pk)
         task.delete()
-        return redirect('task_list')
+        return redirect('project_list')

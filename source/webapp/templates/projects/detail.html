@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ project.name }}{% endblock %}
+
+{% block content %}
+    <h1 class="mb-3">{{ project.name }}</h1>
+    <p class="text-muted small">
+        {{ project.start_date|date:"d.m.Y" }}
+        {% if project.end_date %} — {{ project.end_date|date:"d.m.Y" }}{% endif %}
+    </p>
+
+    {% if project.description %}
+        <p>{{ project.description|linebreaks }}</p>
+    {% endif %}
+
+    <hr>
+    <h4>Задачи проекта</h4>
+    {% for task in project.tasks.all %}
+        <div class="card mb-2 shadow-sm">
+            <div class="card-body">
+                <h6 class="card-title mb-1">{{ task.summary }}</h6>
+                <p class="card-text mb-2">
+                    {% for type in task.types.all %}
+                        <span class="badge text-bg-secondary">{{ type.name }}</span>
+                    {% endfor %}
+                    <span class="badge text-bg-info">{{ task.status.name }}</span>
+                </p>
+                <a href="{% url 'task_detail' task.pk %}" class="btn btn-sm btn-outline-primary">Подробнее</a>
+                <a href="{% url 'task_update' task.pk %}" class="btn btn-sm btn-outline-warning">Редактировать</a>
+                <a href="{% url 'task_delete' task.pk %}" class="btn btn-sm btn-outline-danger">Удалить</a>
+            </div>
+        </div>
+    {% empty %}
+        <p class="text-muted">Задач в этом проекте пока нет.</p>
+    {% endfor %}
+
+    <hr>
+    <a href="{% url 'project_list' %}" class="btn btn-secondary">К списку проектов</a>
+{% endblock %}
