@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
@@ -10,6 +11,9 @@ class TaskDetailView(DetailView):
     model = Task
     template_name = 'tasks/detail.html'
     context_object_name = 'task'
+
+    def get_queryset(self):
+        return super().get_queryset().filter(is_deleted=False)
 
 
 class TaskCreateView(CreateView):
@@ -40,6 +44,9 @@ class TaskUpdateView(UpdateView):
     template_name = 'tasks/update.html'
     context_object_name = 'task'
 
+    def get_queryset(self):
+        return super().get_queryset().filter(is_deleted=False)
+
     def get_success_url(self):
         return reverse('task_detail', kwargs={'pk': self.object.pk})
 
@@ -48,6 +55,15 @@ class TaskDeleteView(DeleteView):
     model = Task
     template_name = 'tasks/delete.html'
     context_object_name = 'task'
+
+    def get_queryset(self):
+        return super().get_queryset().filter(is_deleted=False)
+
+    def form_valid(self, form):
+        success_url = self.get_success_url()
+        self.object.is_deleted = True
+        self.object.save()
+        return HttpResponseRedirect(success_url)
 
     def get_success_url(self):
         return reverse('project_detail', kwargs={'pk': self.object.project.pk})

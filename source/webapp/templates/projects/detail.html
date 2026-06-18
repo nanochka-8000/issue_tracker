@@ -17,7 +17,7 @@
     <h4>Задачи проекта</h4>
     <a href="{% url 'task_create' project.pk %}" class="btn btn-success btn-sm mb-3">+ Добавить задачу</a>
 
-    {% for task in project.tasks.all %}
+    {% for task in tasks %}
         <div class="card mb-2 shadow-sm">
             <div class="card-body">
                 <h6 class="card-title mb-1">{{ task.summary }}</h6>
