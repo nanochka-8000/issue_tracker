@@ -6,5 +6,5 @@
     <h1 class="mb-3">Редактировать задачу #{{ task.pk }}</h1>
     <a href="{% url 'task_detail' task.pk %}" class="btn btn-link mb-3 px-0">← К задаче</a>
 
-    {% include '_task_form.html' %}
+    {% include 'tasks/_form.html' %}
 {% endblock %}

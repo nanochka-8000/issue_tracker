@@ -1,18 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
 from django.views import View
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, CreateView
 
 from webapp.forms import TaskForm
-from webapp.models import Task
-
-
-class TaskListView(TemplateView):
-    template_name = 'tasks/index.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['tasks'] = Task.objects.all().order_by('-created_at')
-        return context
+from webapp.models import Task, Project
 
 
 class TaskDetailView(TemplateView):
@@ -25,17 +17,26 @@ class TaskDetailView(TemplateView):
         return context
 
 
-class TaskCreateView(View):
-    def get(self, request):
-        form = TaskForm()
-        return render(request, 'tasks/create.html', {'form': form})
+class TaskCreateView(CreateView):
+    model = Task
+    form_class = TaskForm
+    template_name = 'tasks/create.html'
 
-    def post(self, request):
-        form = TaskForm(data=request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('project_list')
-        return render(request, 'tasks/create.html', {'form': form})
+    def dispatch(self, request, *args, **kwargs):
+        self.project = get_object_or_404(Project, pk=kwargs['pk'])
+        return super().dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        form.instance.project = self.project
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['project'] = self.project
+        return context
+
+    def get_success_url(self):
+        return reverse('project_detail', kwargs={'pk': self.project.pk})
 
 
 class TaskUpdateView(View):
@@ -60,5 +61,6 @@ class TaskDeleteView(View):
 
     def post(self, request, pk):
         task = get_object_or_404(Task, pk=pk)
+        project_pk = task.project.pk
         task.delete()
-        return redirect('project_list')
+        return redirect('project_detail', pk=project_pk)

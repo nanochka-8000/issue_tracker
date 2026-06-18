@@ -9,11 +9,16 @@
         </div>
         <div class="card-body">
             <p>
-                <strong>Типы:</strong>
+                <strong>Проект:</strong>
+                <a href="{% url 'project_detail' task.project.pk %}">{{ task.project.name }}</a>
+            </p>
+            <p>
+                <strong>Тип:</strong>
                 {% for type in task.types.all %}
                     <span class="badge text-bg-secondary">{{ type.name }}</span>
                 {% endfor %}
-                <strong class="ms-3">Статус:</strong> <span class="badge text-bg-info">{{ task.status.name }}</span>
+                <strong class="ms-3">Статус:</strong>
+                <span class="badge text-bg-info">{{ task.status.name }}</span>
             </p>
 
             <h6>Полное описание</h6>
@@ -31,7 +36,7 @@
             </p>
 
             <hr>
-            <a href="{% url 'task_list' %}" class="btn btn-secondary">К списку</a>
+            <a href="{% url 'project_detail' task.project.pk %}" class="btn btn-secondary">К проекту</a>
             <a href="{% url 'task_update' task.pk %}" class="btn btn-warning">Редактировать</a>
             <a href="{% url 'task_delete' task.pk %}" class="btn btn-danger">Удалить</a>
         </div>

@@ -6,7 +6,6 @@ from webapp.views.projects import (
     ProjectDeleteView,
 )
 from webapp.views.tasks import (
-    TaskListView,
     TaskDetailView,
     TaskCreateView,
     TaskUpdateView,

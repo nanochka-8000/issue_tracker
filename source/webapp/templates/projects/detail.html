@@ -15,6 +15,8 @@
 
     <hr>
     <h4>Задачи проекта</h4>
+    <a href="{% url 'task_create' project.pk %}" class="btn btn-success btn-sm mb-3">+ Добавить задачу</a>
+
     {% for task in project.tasks.all %}
         <div class="card mb-2 shadow-sm">
             <div class="card-body">
@@ -38,3 +40,4 @@
     <a href="{% url 'project_list' %}" class="btn btn-secondary">К списку проектов</a>
     <a href="{% url 'project_update' project.pk %}" class="btn btn-warning">Редактировать</a>
     <a href="{% url 'project_delete' project.pk %}" class="btn btn-danger">Удалить</a>
+{% endblock %}

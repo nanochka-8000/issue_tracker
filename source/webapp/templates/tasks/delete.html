@@ -14,9 +14,6 @@
                 {% endfor %}
                 <span class="badge text-bg-info">{{ task.status.name }}</span>
             </p>
-            <p class="card-text text-muted small">
-                Создано: {{ task.created_at|date:"d.m.Y H:i" }}
-            </p>
         </div>
     </div>
 
@@ -26,5 +23,5 @@
         {% csrf_token %}
         <button type="submit" class="btn btn-danger">Да, удалить</button>
     </form>
-    <a href="{% url 'task_list' %}" class="btn btn-secondary">Отмена</a>
+    <a href="{% url 'project_detail' task.project.pk %}" class="btn btn-secondary">Отмена</a>
 {% endblock %}
