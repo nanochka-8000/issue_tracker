@@ -63,14 +63,36 @@
   }
 },
 {
+  "model": "webapp.project",
+  "pk": 1,
+  "fields": {
+    "name": "Тестовый проект",
+    "description": "Создан автоматически при миграции для существующих задач.",
+    "start_date": "2026-06-18",
+    "end_date": null
+  }
+},
+{
+  "model": "webapp.project",
+  "pk": 2,
+  "fields": {
+    "name": "Project 1",
+    "description": "Project 1",
+    "start_date": "2026-06-01",
+    "end_date": "2026-06-26"
+  }
+},
+{
   "model": "webapp.task",
   "pk": 1,
   "fields": {
     "summary": "Task1",
     "description": "task1",
     "status": 1,
+    "project": 1,
     "created_at": "2026-06-11T11:37:43.155Z",
     "updated_at": "2026-06-11T12:34:27.162Z",
+    "is_deleted": false,
     "types": [
       6
     ]
@@ -83,8 +105,10 @@
     "summary": "Task2",
     "description": "task2",
     "status": 2,
+    "project": 1,
     "created_at": "2026-06-11T11:38:02.035Z",
     "updated_at": "2026-06-11T12:34:16.093Z",
+    "is_deleted": false,
     "types": [
       5
     ]
@@ -97,8 +121,10 @@
     "summary": "Task3",
     "description": "task3",
     "status": 3,
+    "project": 1,
     "created_at": "2026-06-11T11:38:15.646Z",
     "updated_at": "2026-06-11T12:34:10.109Z",
+    "is_deleted": false,
     "types": [
       4
     ]
@@ -111,8 +137,10 @@
     "summary": "Task4",
     "description": "task4",
     "status": 1,
+    "project": 1,
     "created_at": "2026-06-11T11:38:31.127Z",
     "updated_at": "2026-06-11T12:34:03.796Z",
+    "is_deleted": false,
     "types": [
       6
     ]
@@ -125,8 +153,10 @@
     "summary": "Task5",
     "description": "task5",
     "status": 3,
+    "project": 1,
     "created_at": "2026-06-11T11:38:43.126Z",
     "updated_at": "2026-06-11T12:33:55.586Z",
+    "is_deleted": false,
     "types": [
       5
     ]
@@ -139,8 +169,10 @@
     "summary": "Task6",
     "description": "task6",
     "status": 2,
+    "project": 1,
     "created_at": "2026-06-11T11:39:00.680Z",
     "updated_at": "2026-06-11T12:33:48.375Z",
+    "is_deleted": false,
     "types": [
       4
     ]
@@ -153,8 +185,10 @@
     "summary": "Починить кнопку входа",
     "description": "Кнопка не реагировала на клик",
     "status": 3,
+    "project": 1,
     "created_at": "2026-06-15T11:27:10.042Z",
     "updated_at": "2026-06-15T11:27:10.042Z",
+    "is_deleted": false,
     "types": [
       7
     ]
@@ -167,8 +201,10 @@
     "summary": "Bug в форме регистрации",
     "description": "Bug в форме регистрации",
     "status": 1,
+    "project": 1,
     "created_at": "2026-06-15T11:27:34.164Z",
     "updated_at": "2026-06-15T11:27:34.164Z",
+    "is_deleted": false,
     "types": [
       7
     ]
@@ -181,8 +217,10 @@
     "summary": "Добавить тёмную тему",
     "description": "Переключатель в шапке",
     "status": 2,
+    "project": 1,
     "created_at": "2026-06-15T11:28:54.045Z",
     "updated_at": "2026-06-15T11:28:54.045Z",
+    "is_deleted": false,
     "types": [
       9
     ]
@@ -195,8 +233,10 @@
     "summary": "Уведомления по email",
     "description": "При смене статуса",
     "status": 2,
+    "project": 1,
     "created_at": "2026-06-15T11:29:53.279Z",
     "updated_at": "2026-06-15T11:29:53.279Z",
+    "is_deleted": false,
     "types": [
       9
     ]
@@ -209,8 +249,10 @@
     "summary": "Тесты модели Task",
     "description": "Покрыть валидаторы и связи",
     "status": 2,
+    "project": 1,
     "created_at": "2026-06-15T11:30:49.246Z",
     "updated_at": "2026-06-15T11:30:49.246Z",
+    "is_deleted": false,
     "types": [
       8
     ]
@@ -223,8 +265,10 @@
     "summary": "Падает сервер при загрузке",
     "description": "500-я ошибка на больших файлах",
     "status": 3,
+    "project": 1,
     "created_at": "2026-06-15T11:36:02.126Z",
     "updated_at": "2026-06-15T11:36:02.126Z",
+    "is_deleted": false,
     "types": [
       7
     ]
@@ -237,8 +281,10 @@
     "summary": "BUG: 500 на странице админки",
     "description": "После последней миграции",
     "status": 2,
+    "project": 1,
     "created_at": "2026-06-15T11:36:39.693Z",
     "updated_at": "2026-06-15T11:36:39.693Z",
+    "is_deleted": false,
     "types": [
       7
     ]
@@ -251,8 +297,10 @@
     "summary": "Добавить пагинацию",
     "description": "На главную страницу",
     "status": 3,
+    "project": 1,
     "created_at": "2026-06-15T11:37:28.829Z",
     "updated_at": "2026-06-15T11:37:28.830Z",
+    "is_deleted": false,
     "types": [
       9
     ]
@@ -265,10 +313,28 @@
     "summary": "Поиск по задачам",
     "description": "По summary и description",
     "status": 1,
+    "project": 1,
     "created_at": "2026-06-15T11:38:08.424Z",
     "updated_at": "2026-06-15T11:38:08.424Z",
+    "is_deleted": false,
     "types": [
       8
+    ]
+  }
+},
+{
+  "model": "webapp.task",
+  "pk": 17,
+  "fields": {
+    "summary": "Task7",
+    "description": "Task7",
+    "status": 1,
+    "project": 2,
+    "created_at": "2026-06-18T12:52:49.035Z",
+    "updated_at": "2026-06-18T12:52:49.035Z",
+    "is_deleted": false,
+    "types": [
+      7
     ]
   }
 },
