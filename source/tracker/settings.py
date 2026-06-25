@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "webapp",
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -118,3 +119,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 FIXTURE_DIRS = [BASE_DIR / 'fixtures']
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'task_list'
+LOGOUT_REDIRECT_URL = 'task_list'

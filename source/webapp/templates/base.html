@@ -14,9 +14,35 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'task_list' %}">Главная</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'task_create' %}">Добавить задачу</a>
-                    </li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'task_create' %}">Добавить задачу</a>
+                        </li>
+                    {% endif %}
+                </ul>
+
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <span class="navbar-text text-white me-3">Привет, {{ user.username }}!</span>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'password_change' %}">Сменить пароль</a>
+                        </li>
+                        <li class="nav-item">
+                            <form method="post" action="{% url 'logout' %}" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-light btn-sm ms-2">Выйти</button>
+                            </form>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Войти</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'register' %}">Регистрация</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
