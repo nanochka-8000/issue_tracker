@@ -1,6 +1,6 @@
 from django import forms
 
-from webapp.models import Status, Type
+from webapp.models import Project, Status, Type
 
 
 class TaskForm(forms.Form):
@@ -24,3 +24,38 @@ class TaskForm(forms.Form):
         label='Статус',
         widget=forms.Select(attrs={'class': 'form-select'}),
     )
+    project = forms.ModelChoiceField(
+        queryset=Project.objects.all(),
+        required=False,
+        label='Проект',
+        widget=forms.Select(attrs={'class': 'form-select'}),
+    )
+
+
+class ProjectForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = ['name', 'description', 'started_at', 'finished_at']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'started_at': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'finished_at': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+        }
+        labels = {
+            'name': 'Название',
+            'description': 'Описание',
+            'started_at': 'Дата начала',
+            'finished_at': 'Дата окончания',
+        }
+
+
+class ProjectUsersForm(forms.ModelForm):
+
+    class Meta:
+        model = Project
+        fields = ['users']
+        widgets = {
+            'users': forms.CheckboxSelectMultiple,
+        }
+        labels = {'users': 'Участники'}

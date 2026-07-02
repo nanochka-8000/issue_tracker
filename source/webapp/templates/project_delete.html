@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Удалить проект — Issue Tracker{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h1 class="h3 mb-3">Удалить проект?</h1>
+                <p>Вы точно хотите удалить проект <strong>{{ project.name }}</strong>?</p>
+                <p class="text-danger small">Все задачи проекта тоже будут удалены!</p>
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Да, удалить</button>
+                    <a href="{% url 'project_detail' project.pk %}" class="btn btn-secondary">Отмена</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

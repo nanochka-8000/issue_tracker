@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Добавить участников — Issue Tracker{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h1 class="h3 mb-2">Участники проекта</h1>
+                <p class="text-muted">{{ project.name }}</p>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label">Выберите участников:</label>
+                        {{ form.users }}
+                        {% if form.users.errors %}<div class="text-danger small mt-1">{{ form.users.errors }}</div>{% endif %}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <a href="{% url 'project_detail' project.pk %}" class="btn btn-secondary">Отмена</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

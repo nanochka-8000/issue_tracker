@@ -29,4 +29,9 @@
     {% endif %}
 
     <button type="submit" class="btn btn-success">Сохранить</button>
+    <div class="mb-3">
+        <label class="form-label">{{ form.project.label }}</label>
+        {{ form.project }}
+        {% if form.project.errors %}<div class="text-danger small mt-1">{{ form.project.errors }}</div>{% endif %}
+    </div>
 </form>
