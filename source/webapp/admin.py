@@ -1,22 +1,14 @@
 from django.contrib import admin
-from webapp.models import Status, Type, Task
+
+from webapp.models import Project, Status, Task, Type
 
 
-class StatusAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name']
+admin.site.register(Status)
+admin.site.register(Type)
+admin.site.register(Task)
 
 
-class TypeAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name']
-
-
-class TaskAdmin(admin.ModelAdmin):
-    list_display = ['id', 'summary', 'status', 'created_at']
-    list_filter = ['status', 'types']
-    search_fields = ['summary', 'description']
-    filter_horizontal = ['types']
-
-
-admin.site.register(Status, StatusAdmin)
-admin.site.register(Type, TypeAdmin)
-admin.site.register(Task, TaskAdmin)
+@admin.register(Project)
+class ProjectAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'started_at', 'finished_at')
+    filter_horizontal = ('users',)

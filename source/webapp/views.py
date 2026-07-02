@@ -5,6 +5,14 @@ from django.views import View
 from django.views.generic import TemplateView
 
 from webapp.forms import ProjectForm, ProjectUsersForm, TaskForm
+from webapp.mixins import (
+    CanCreateProjectMixin,
+    CanCreateTaskMixin,
+    CanDeleteTaskMixin,
+    CanEditProjectMixin,
+    CanEditTaskMixin,
+    CanManageUsersMixin,
+)
 from webapp.models import Project, Task
 
 
@@ -28,13 +36,15 @@ class TaskDetailView(TemplateView):
         return context
 
 
-class TaskCreateView(LoginRequiredMixin, View):
+class TaskCreateView(CanCreateTaskMixin, View):
     def get(self, request):
         form = TaskForm()
+        form.fields['project'].queryset = request.user.projects.all()
         return render(request, 'task_create.html', {'form': form})
 
     def post(self, request):
         form = TaskForm(data=request.POST)
+        form.fields['project'].queryset = request.user.projects.all()
         if form.is_valid():
             task = Task.objects.create(
                 summary=form.cleaned_data['summary'],
@@ -47,7 +57,7 @@ class TaskCreateView(LoginRequiredMixin, View):
         return render(request, 'task_create.html', {'form': form})
 
 
-class TaskUpdateView(LoginRequiredMixin, View):
+class TaskUpdateView(CanEditTaskMixin, View):
     def get(self, request, pk):
         task = get_object_or_404(Task, pk=pk)
         form = TaskForm(initial={
@@ -57,11 +67,13 @@ class TaskUpdateView(LoginRequiredMixin, View):
             'status': task.status,
             'project': task.project,
         })
+        form.fields['project'].queryset = request.user.projects.all()
         return render(request, 'task_update.html', {'form': form, 'task': task})
 
     def post(self, request, pk):
         task = get_object_or_404(Task, pk=pk)
         form = TaskForm(data=request.POST)
+        form.fields['project'].queryset = request.user.projects.all()
         if form.is_valid():
             task.summary = form.cleaned_data['summary']
             task.description = form.cleaned_data['description']
@@ -73,7 +85,7 @@ class TaskUpdateView(LoginRequiredMixin, View):
         return render(request, 'task_update.html', {'form': form, 'task': task})
 
 
-class TaskDeleteView(LoginRequiredMixin, View):
+class TaskDeleteView(CanDeleteTaskMixin, View):
     def get(self, request, pk):
         task = get_object_or_404(Task, pk=pk)
         return render(request, 'task_delete.html', {'task': task})
@@ -104,7 +116,7 @@ class ProjectDetailView(TemplateView):
         return context
 
 
-class ProjectCreateView(LoginRequiredMixin, View):
+class ProjectCreateView(CanCreateProjectMixin, View):
     def get(self, request):
         form = ProjectForm()
         return render(request, 'project_create.html', {'form': form})
@@ -118,8 +130,7 @@ class ProjectCreateView(LoginRequiredMixin, View):
         return render(request, 'project_create.html', {'form': form})
 
 
-class ProjectUpdateView(LoginRequiredMixin, View):
-
+class ProjectUpdateView(CanEditProjectMixin, View):
     def get(self, request, pk):
         project = get_object_or_404(Project, pk=pk)
         form = ProjectForm(instance=project)
@@ -134,8 +145,7 @@ class ProjectUpdateView(LoginRequiredMixin, View):
         return render(request, 'project_update.html', {'form': form, 'project': project})
 
 
-class ProjectDeleteView(LoginRequiredMixin, View):
-
+class ProjectDeleteView(CanEditProjectMixin, View):
     def get(self, request, pk):
         project = get_object_or_404(Project, pk=pk)
         return render(request, 'project_delete.html', {'project': project})
@@ -146,8 +156,7 @@ class ProjectDeleteView(LoginRequiredMixin, View):
         return redirect('project_list')
 
 
-class ProjectAddUsersView(LoginRequiredMixin, View):
-
+class ProjectAddUsersView(CanManageUsersMixin, View):
     def get(self, request, pk):
         project = get_object_or_404(Project, pk=pk)
         form = ProjectUsersForm(instance=project)
@@ -162,8 +171,7 @@ class ProjectAddUsersView(LoginRequiredMixin, View):
         return render(request, 'project_add_users.html', {'form': form, 'project': project})
 
 
-class ProjectRemoveUserView(LoginRequiredMixin, View):
-
+class ProjectRemoveUserView(CanManageUsersMixin, View):
     def post(self, request, pk, user_pk):
         project = get_object_or_404(Project, pk=pk)
         user = get_object_or_404(User, pk=user_pk)

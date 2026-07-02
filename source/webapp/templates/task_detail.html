@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load webapp_extras %}
 
 {% block title %}{{ task.summary }}{% endblock %}
 
@@ -16,6 +17,13 @@
                 <strong class="ms-3">Статус:</strong> <span class="badge text-bg-info">{{ task.status.name }}</span>
             </p>
 
+            {% if task.project %}
+                <p>
+                    <strong>Проект:</strong>
+                    <a href="{% url 'project_detail' task.project.pk %}">{{ task.project.name }}</a>
+                </p>
+            {% endif %}
+
             <h6>Полное описание</h6>
             <div class="mb-3">
                 {% if task.description %}
@@ -32,8 +40,15 @@
 
             <hr>
             <a href="{% url 'task_list' %}" class="btn btn-secondary">К списку</a>
-            <a href="{% url 'task_update' task.pk %}" class="btn btn-warning">Редактировать</a>
-            <a href="{% url 'task_delete' task.pk %}" class="btn btn-danger">Удалить</a>
+
+            {% if task.project and user|is_in_project:task.project %}
+                {% if perms.webapp.change_task %}
+                    <a href="{% url 'task_update' task.pk %}" class="btn btn-warning">Редактировать</a>
+                {% endif %}
+                {% if perms.webapp.delete_task %}
+                    <a href="{% url 'task_delete' task.pk %}" class="btn btn-danger">Удалить</a>
+                {% endif %}
+            {% endif %}
         </div>
     </div>
 {% endblock %}

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load webapp_extras %}
 
 {% block title %}{{ project.name }} — Issue Tracker{% endblock %}
 
@@ -12,7 +13,7 @@
         </p>
         <p>{{ project.description|linebreaksbr }}</p>
 
-        {% if user.is_authenticated %}
+        {% if perms.webapp.change_project and user|is_in_project:project %}
             <div class="mt-3">
                 <a href="{% url 'project_update' project.pk %}" class="btn btn-warning btn-sm">Редактировать</a>
                 <a href="{% url 'project_delete' project.pk %}" class="btn btn-danger btn-sm">Удалить</a>
@@ -25,7 +26,7 @@
     <div class="card-body">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h2 class="h5 mb-0">Участники</h2>
-            {% if user.is_authenticated %}
+            {% if user|is_in_project:project and user|in_group:"Project Manager" or user|is_in_project:project and user|in_group:"Team Lead" %}
                 <a href="{% url 'project_add_users' project.pk %}" class="btn btn-primary btn-sm">Добавить участников</a>
             {% endif %}
         </div>
@@ -40,7 +41,7 @@
                                 <span class="text-muted small">({{ u.first_name }} {{ u.last_name }})</span>
                             {% endif %}
                         </span>
-                        {% if user.is_authenticated %}
+                        {% if user|is_in_project:project and user|in_group:"Project Manager" or user|is_in_project:project and user|in_group:"Team Lead" %}
                             <form method="post" action="{% url 'project_remove_user' project.pk u.pk %}" class="d-inline">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-outline-danger btn-sm">Убрать</button>

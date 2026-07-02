@@ -123,3 +123,4 @@ FIXTURE_DIRS = [BASE_DIR / 'fixtures']
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'task_list'
 LOGOUT_REDIRECT_URL = 'task_list'
+DEBUG = True
